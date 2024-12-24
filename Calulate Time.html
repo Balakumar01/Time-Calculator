@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Converter - Created by Bala</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #007bff; /* Blue background */
+            color: #fff;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for attractivness */
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            padding: 5px;
+            background-color: rgba(255, 255, 255, 0.3); /* Light white fill */
+            border-radius: 5px;
+        }
+        .section {
+            margin-bottom: 10px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+        button {
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #f06;
+            color: #fff;
+        }
+        .result {
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .blog-button {
+            padding: 8px 16px;
+            background-color: #00bcd4;
+            border: none;
+            font-size: 16px;
+            font-weight: normal;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .blog-button:hover {
+            background-color: #f06;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Time Converter</h1>
+    <div class="section">
+        <h2>Hours to Seconds & Minutes</h2>
+        <label for="hoursInput">Enter hours: </label>
+        <input type="number" id="hoursInput" placeholder="0" />
+        <button onclick="convertHours()">Convert</button>
+        <div class="result" id="hoursResult"></div>
+    </div>
+
+    <div class="section">
+        <h2>Minutes to Seconds & Hours</h2>
+        <label for="minutesInput">Enter minutes: </label>
+        <input type="number" id="minutesInput" placeholder="0" />
+        <button onclick="convertMinutes()">Convert</button>
+        <div class="result" id="minutesResult"></div>
+    </div>
+
+    <div class="section">
+        <h2>Time (hh:mm:ss) to Total Seconds & Minutes</h2>
+        <label for="timeInput">Enter time (hh:mm:ss): </label>
+        <input type="text" id="timeInput" placeholder="00:00:00" />
+        <button onclick="convertTime()">Convert</button>
+        <div class="result" id="timeResult"></div>
+    </div>
+
+    <div class="footer">
+        <p>Created by Bala</p>
+        <a href="https://medium.com/@kbala7092" target="_blank" class="blog-button">Visit My Blog</a>
+    </div>
+
+    <script>
+        function convertHours() {
+            const hours = parseInt(document.getElementById('hoursInput').value, 10);
+            if (isNaN(hours) || hours < 0) {
+                document.getElementById('hoursResult').innerText = 'Please enter a valid number of hours.';
+                return;
+            }
+            const seconds = hours * 3600;
+            const minutes = hours * 60;
+            document.getElementById('hoursResult').innerText = `${hours} hours = ${seconds} seconds = ${minutes} minutes`;
+        }
+
+        function convertMinutes() {
+            const minutes = parseInt(document.getElementById('minutesInput').value, 10);
+            if (isNaN(minutes) || minutes < 0) {
+                document.getElementById('minutesResult').innerText = 'Please enter a valid number of minutes.';
+                return;
+            }
+            const seconds = minutes * 60;
+            const hours = minutes / 60;
+            document.getElementById('minutesResult').innerText = `${minutes} minutes = ${seconds} seconds = ${hours.toFixed(2)} hours`;
+        }
+
+        function convertTime() {
+            const timeString = document.getElementById('timeInput').value;
+            const timeParts = timeString.split(':');
+
+            if (timeParts.length !== 3) {
+                document.getElementById('timeResult').innerText = 'Please enter a valid time format (hh:mm:ss).';
+                return;
+            }
+
+            const hours = parseInt(timeParts[0], 10);
+            const minutes = parseInt(timeParts[1], 10);
+            const seconds = parseInt(timeParts[2], 10);
+
+            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds) || hours < 0 || minutes < 0 || minutes >= 60 || seconds < 0 || seconds >= 60) {
+                document.getElementById('timeResult').innerText = 'Invalid time values. Please check the input.';
+                return;
+            }
+
+            const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            const totalMinutes = totalSeconds / 60;
+            const totalHours = totalSeconds / 3600;
+            document.getElementById('timeResult').innerText = `Total seconds: ${totalSeconds}, Total minutes: ${totalMinutes.toFixed(2)}, Total hours: ${totalHours.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
